@@ -250,6 +250,6 @@ If this dataset supports your research, please cite:
 
 **TuChong SWE-bench-Multilingual** — Real-world software engineering, in every language
 
-**真实软件工程，多语言世界**
+**真实世界的软件工程任务，覆盖每一种编程语言**
 
 </div>
