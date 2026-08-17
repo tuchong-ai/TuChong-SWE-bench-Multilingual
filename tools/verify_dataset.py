@@ -47,8 +47,11 @@ REQUIRED_FILES = [
 
 PATCH_HEADER_RE = re.compile(r"^diff --git ", re.MULTILINE)
 
-# Directories to exclude from checksum verification
-EXCLUDE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git", "node_modules"}
+# Repository infrastructure (not dataset payload), by path relative to the
+# repository root, excluded from checksum coverage. Instance-level README.md
+# files under instances/ remain covered.
+EXCLUDE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git", "node_modules", "assets"}
+EXCLUDE_FILES = {"CHECKSUMS.sha256", "README.md", "LICENSE"}
 
 
 def check(name: str, ok: bool, detail: str = "") -> bool:
@@ -259,9 +262,9 @@ def verify_bundle(bundle_dir: Path) -> bool:
             # Prune excluded directories in-place
             dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
             for fname in files:
-                if fname == "CHECKSUMS.sha256":
-                    continue
                 rel = os.path.relpath(os.path.join(root, fname), bundle_dir)
+                if rel in EXCLUDE_FILES:
+                    continue
                 all_files.add(rel)
 
         # Read recorded checksums
