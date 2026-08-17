@@ -19,6 +19,8 @@ Checks:
   9. INDEX.jsonl contains all required release audit fields
  10. All swe_bench_instance.version fields are non-empty
  11. CHECKSUMS.sha256 covers all files and verifies correctly
+     (Release-hosted image archives not yet downloaded are reported as
+     skipped, not failed)
 """
 
 import hashlib
@@ -256,6 +258,12 @@ def verify_bundle(bundle_dir: Path) -> bool:
     # --- 11. CHECKSUMS ---
     checksums_path = bundle_dir / "CHECKSUMS.sha256"
     if checksums_path.exists():
+        # Release-hosted archives (e.g. the Docker image tarball) are too
+        # large for git and are distributed as GitHub Release assets. A
+        # missing one is reported as skipped, not failed; download it into
+        # its declared path to enable full verification.
+        release_assets = {a.get("path", "") for a in img_archives} if img_archives else set()
+
         # D-7 fix: collect all files excluding __pycache__ and similar dirs
         all_files = set()
         for root, dirs, files in os.walk(bundle_dir):
@@ -284,10 +292,15 @@ def verify_bundle(bundle_dir: Path) -> bool:
         all_ok &= check("CHECKSUMS covers all files", not uncovered,
                         f"{len(uncovered)} uncovered" if uncovered else "")
 
-        # Check for stale entries (recorded but file no longer exists)
-        stale = set(recorded.keys()) - all_files
+        # Check for stale entries (recorded but file no longer exists).
+        # Release-hosted assets are expected to be absent before download.
+        stale = set(recorded.keys()) - all_files - release_assets
         all_ok &= check("CHECKSUMS has no stale entries", not stale,
                         f"{len(stale)} stale: {sorted(stale)[:3]}" if stale else "")
+        pending = (set(recorded.keys()) - all_files) & release_assets
+        if pending:
+            check(f"CHECKSUMS: {len(pending)} Release asset(s) pending download (skipped, not failed)",
+                  True, "; ".join(sorted(pending)))
 
         # Verify all checksums
         sampled = 0
@@ -295,6 +308,8 @@ def verify_bundle(bundle_dir: Path) -> bool:
         for rel_path, expected_hash in sorted(recorded.items()):
             full_path = bundle_dir / rel_path
             if not full_path.exists():
+                if rel_path in release_assets:
+                    continue
                 mismatches += 1
                 sampled += 1
                 continue
@@ -303,7 +318,7 @@ def verify_bundle(bundle_dir: Path) -> bool:
                 mismatches += 1
             sampled += 1
 
-        all_ok &= check(f"CHECKSUMS verification ({sampled} files)", mismatches == 0,
+        all_ok &= check(f"CHECKSUMS verification ({sampled} files verified)", mismatches == 0,
                         f"{mismatches} mismatches" if mismatches else "")
 
     # --- Summary ---
