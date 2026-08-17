@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.1",
+  "instance_id": "jhy__jsoup-2483",
+  "repo": "jhy/jsoup",
+  "base_commit": "e1b0df5fec53710214cd700de38d82e1ca92bd79",
+  "version": "java-e1b0df5fec53",
+  "problem_statement": "Small HTML documents can fail when parsed through jsoup streaming APIs if the document charset must be discovered from the content. In this case, Connection.Response.streamParser() and DataUtil.streamParser(Path, ...) should complete successfully and produce the same correctly decoded document behavior as regular parsing. Instead, streamParser().complete() can throw ValidationException: Object must not be null. Larger documents do not show the failure. Regular parse behavior and existing stream parsing behavior for other inputs must remain unchanged.",
+  "hints_text": ""
+}

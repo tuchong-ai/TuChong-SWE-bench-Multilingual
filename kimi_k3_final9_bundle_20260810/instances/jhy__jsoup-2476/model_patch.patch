@@ -1,0 +1,18 @@
+diff --git a/src/main/java/org/jsoup/safety/Cleaner.java b/src/main/java/org/jsoup/safety/Cleaner.java
+index 32ae23f..c573177 100644
+--- a/src/main/java/org/jsoup/safety/Cleaner.java
++++ b/src/main/java/org/jsoup/safety/Cleaner.java
+@@ -215,6 +215,13 @@ public class Cleaner {
+             }
+         }
+ 
++        // remove any case-variants of enforced keys copied from the source (e.g. REL when case is preserved), so
++        // that the enforced attribute appears once, with the enforced key and value
++        for (Attribute enforcedAttr : enforcedAttrs) {
++            String key = enforcedAttr.getKey();
++            while (destAttrs.hasKeyIgnoreCase(key))
++                destAttrs.removeIgnoreCase(key);
++        }
+         destAttrs.addAll(enforcedAttrs);
+         dest.attributes().addAll(destAttrs); // re-attach, if removed in clear
+         return new ElementMeta(dest, numDiscarded);

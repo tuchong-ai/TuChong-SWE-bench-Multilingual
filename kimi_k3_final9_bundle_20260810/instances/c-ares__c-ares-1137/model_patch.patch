@@ -1,0 +1,20 @@
+diff --git a/src/lib/record/ares_dns_parse.c b/src/lib/record/ares_dns_parse.c
+index 18c2542..b85ecdc 100644
+--- a/src/lib/record/ares_dns_parse.c
++++ b/src/lib/record/ares_dns_parse.c
+@@ -1507,6 +1507,15 @@ static ares_status_t ares_dns_parse_rr(ares_buf_t *buf, unsigned int flags,
+     type = ARES_REC_TYPE_RAW_RR;
+   }
+ 
++  /* RFC 6891 6.1.1. There MUST be at most one OPT pseudo-RR in the
++   * additional section of a message.  Reject messages containing multiple
++   * OPT records as they are malformed. */
++  if (sect == ARES_SECTION_ADDITIONAL && type == ARES_REC_TYPE_OPT &&
++      ares_dns_get_opt_rr_const(dnsrec) != NULL) {
++    status = ARES_EBADRESP;
++    goto done;
++  }
++
+   namecomp = ares_dns_rec_allow_name_comp(type);
+   if (sect == ARES_SECTION_ANSWER &&
+       (flags &

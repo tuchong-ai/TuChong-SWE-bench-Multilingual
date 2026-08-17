@@ -1,0 +1,76 @@
+diff --git a/packages/eslint-plugin/src/rules/no-unused-vars.ts b/packages/eslint-plugin/src/rules/no-unused-vars.ts
+index a02e94ff1..7121a2a2b 100644
+--- a/packages/eslint-plugin/src/rules/no-unused-vars.ts
++++ b/packages/eslint-plugin/src/rules/no-unused-vars.ts
+@@ -26,6 +26,7 @@ import {
+   nullThrows,
+   NullThrowsReasons,
+ } from '../util';
++import { referenceContainsTypePredicate } from '../util/referenceContainsTypePredicate';
+ import { referenceContainsTypeQuery } from '../util/referenceContainsTypeQuery';
+ 
+ export type MessageIds =
+@@ -1205,8 +1206,10 @@ export default createRule<Options, MessageIds>({
+         for (const unusedVar of unusedVars) {
+           // Report the first declaration.
+           if (unusedVar.defs.length > 0) {
+-            const usedOnlyAsType = unusedVar.references.some(ref =>
+-              referenceContainsTypeQuery(ref.identifier),
++            const usedOnlyAsType = unusedVar.references.some(
++              ref =>
++                referenceContainsTypeQuery(ref.identifier) ||
++                referenceContainsTypePredicate(ref.identifier),
+             );
+             const messageId = usedOnlyAsType ? 'usedOnlyAsType' : 'unusedVar';
+ 
+diff --git a/packages/eslint-plugin/src/util/collectUnusedVariables.ts b/packages/eslint-plugin/src/util/collectUnusedVariables.ts
+index d4d04fefb..8e81bf6ce 100644
+--- a/packages/eslint-plugin/src/util/collectUnusedVariables.ts
++++ b/packages/eslint-plugin/src/util/collectUnusedVariables.ts
+@@ -17,6 +17,7 @@ import {
+ } from '@typescript-eslint/utils';
+ 
+ import { isTypeImport } from './isTypeImport';
++import { referenceContainsTypePredicate } from './referenceContainsTypePredicate';
+ import { referenceContainsTypeQuery } from './referenceContainsTypeQuery';
+ 
+ interface VariableAnalysis {
+@@ -792,7 +793,11 @@ function isUsedVariable(variable: ScopeVariable): boolean {
+     return (
+       ref.isRead() &&
+       !forItself &&
+-      !(!isImportedAsType && referenceContainsTypeQuery(ref.identifier)) &&
++      !(
++        !isImportedAsType &&
++        (referenceContainsTypeQuery(ref.identifier) ||
++          referenceContainsTypePredicate(ref.identifier))
++      ) &&
+       !(isFunctionDefinition && isSelfReference(ref, functionNodes)) &&
+       !(isTypeDecl && isInsideOneOf(ref, typeDeclNodes)) &&
+       !(isModuleDecl && isSelfReference(ref, moduleDeclNodes)) &&
+diff --git a/packages/eslint-plugin/src/util/referenceContainsTypePredicate.ts b/packages/eslint-plugin/src/util/referenceContainsTypePredicate.ts
+new file mode 100644
+index 000000000..f9b300f9d
+--- /dev/null
++++ b/packages/eslint-plugin/src/util/referenceContainsTypePredicate.ts
+@@ -0,0 +1,20 @@
++import type { TSESTree } from '@typescript-eslint/utils';
++
++import { AST_NODE_TYPES } from '@typescript-eslint/utils';
++
++/**
++ * Recursively checks whether a given reference is used in a type predicate (e.g., `arg is string`)
++ */
++export function referenceContainsTypePredicate(node: TSESTree.Node): boolean {
++  switch (node.type) {
++    case AST_NODE_TYPES.TSTypePredicate:
++      return true;
++
++    case AST_NODE_TYPES.TSQualifiedName:
++    case AST_NODE_TYPES.Identifier:
++      return referenceContainsTypePredicate(node.parent);
++
++    default:
++      return false;
++  }
++}

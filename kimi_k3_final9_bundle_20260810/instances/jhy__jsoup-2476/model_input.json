@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.1",
+  "instance_id": "jhy__jsoup-2476",
+  "repo": "jhy/jsoup",
+  "base_commit": "e640ca8a72415e305227175c6289cca994502727",
+  "version": "java-e640ca8a7241",
+  "problem_statement": "As a follow-up to #2475, I noticed another small `Cleaner` issue when working with a parsed `Document` that preserves attribute case.\n\nIf an element already has an attribute that matches an enforced attribute, but with different key case, the cleaned output can contain both versions of the attribute instead of a single enforced one.\n\nFor example:\n\n```java\nDocument dirty = Jsoup.parse(\"<a REL='external'>One</a>\", \"\",\n    Parser.htmlParser().settings(ParseSettings.preserveCase));\nCleaner cleaner = new Cleaner(Safelist.none()\n    .addTags(\"a\")\n    .addEnforcedAttribute(\"a\", \"rel\", \"external\"));\n\ncleaner.clean(dirty).body().html();\n// was:    <a REL=\"external\" rel=\"external\">One</a>\n// should: <a rel=\"external\">One</a>\n```\n\nThe same thing can happen with the standard `Safelist.basic()` handling of `rel=\"nofollow\"` on external links.\n\nThe intended behavior is that when an enforced attribute applies, the cleaned output should contain that attribute once, using the enforced key and value. A case-variant source attribute should be replaced, not duplicated.\n",
+  "hints_text": ""
+}

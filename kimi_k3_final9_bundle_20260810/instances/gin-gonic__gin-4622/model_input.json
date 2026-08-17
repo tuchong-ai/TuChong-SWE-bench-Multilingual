@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.1",
+  "instance_id": "gin-gonic__gin-4622",
+  "repo": "gin-gonic/gin",
+  "base_commit": "da1e108614ecbbadfa5736b1b297b16121d23b9b",
+  "version": "go-da1e108614ec",
+  "problem_statement": "## Description\n\nAfter upgrading from v1.10.1 to v1.12.0, `Context.SaveUploadedFile` started to fail when saving files directly into existing system directories like `/tmp`.\n\nThe failure happens due to an attempt to call `os.Chmod` on the target directory, even if it already exists and is not owned by the process.\n\nRelevant code:\nhttps://github.com/gin-gonic/gin/blob/v1.12.0/context.go#L734\n\n## Reproduction\n\n```go\nfile, _ := c.FormFile(\"file\")\n\n// Saving directly into /tmp\nerr := c.SaveUploadedFile(file, \"/tmp/test.txt\")\nif err != nil {\n  panic(err)\n}\n```\n\n## Actual behavior\n\nThe call fails with:\n\nchmod /tmp: operation not permitted\n\n## Expected behavior\n\nIf the directory already exists, especially for system directories like `/tmp`, `SaveUploadedFile` should not attempt to modify its permissions.\n\nThe previous behavior (v1.10.1) only used `os.MkdirAll`, which does not change permissions on existing directories.\n\n## Impact\n\nThis is a breaking change for common usage patterns such as:\n\n* saving files to `/tmp/<filename>`\n* writing into pre-existing directories managed by the OS or container runtime\n\n## Context\n\nThis behavior appears to be introduced together with the change that allows specifying permissions for created directories (see #4068). However, applying `chmod` unconditionally also affects already existing directories.",
+  "hints_text": ""
+}

@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.1",
+  "instance_id": "lvgl__lvgl-10308",
+  "repo": "lvgl/lvgl",
+  "base_commit": "7da9cae8837c4598ab9ba0f0cd0cf6901c92595e",
+  "version": "",
+  "problem_statement": "### LVGL version\n\nDiscovered in 9.3.0, exists up to master commit #10009\n\n### Platform\n\nShould not be related, but in my case it was STM32H753 on custom PCB.\n\n### What happened?\n\nI’m using LVGL9.3 but master #10009 is affected too. I use slider widget to seek in music file with millisecond precision. One of files that I tested has 180 minutes of audio data (so slider range was from 0 up to about 10800000 milliseconds). Slider width is about 600px. When I set value higher than about 4020000 I noticed that knob and bar moved to start (rolled over). I started looking what causing issue, due to 4 millions are within int32 and found quite a lot of lines of code with multiplication of int32 values without widening to int64.\n\nIn slider.c # 10009 widget issue may happen at least in lines: 605 and 624.\nIn bar.c # 10009 widget issue may happen at least in lines 436 - 463 where ever multiplication happening between geometry and values.\n\nFor example slider.c line 605 original:\n`new_value = (new_value * range + indic_w / 2) / indic_w;`\nI fixed in my project like:\n`new_value = (int32_t)(((int64_t)new_value * (int64_t)range + (int64_t)(indic_w / 2)) / indic_w);`\n\nIn bar.c line 462 original:\n`anim_cur_value_x = (int32_t)((int32_t)anim_length * (bar->cur_value - bar->min_value)) / range;`\nI fixed in my project like:\n`anim_cur_value_x = (int32_t)(((int64_t)anim_length * (int64_t)(bar->cur_value - bar->min_value)) / (int64_t)range);`\n\n\n### How to reproduce?\n\nThe way to reproduce is to set min/max values close to int32_t limits. In my case value above 4020000 within range 0...10800000 and width of about 600px was enough.",
+  "hints_text": ""
+}

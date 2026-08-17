@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.1",
+  "instance_id": "jbeder__yaml-cpp-1373",
+  "repo": "jbeder/yaml-cpp",
+  "base_commit": "1bff0699f867722024558253f4d8b54b51107471",
+  "version": "",
+  "problem_statement": "A node tagged with the YAML secondary tag handle `!!str` is emitted incorrectly,\nwhile ordinary primary-handle tags such as `!mytag` must continue to work.\n\nReproduce with this minimal example:\n\n```cpp\nYAML::Node root_node{};\nYAML::Node string_node{\"hello\"};\nstring_node.SetTag(\"!!str\");\nroot_node[\"some_string\"] = string_node;\nroot_node[\"some_int\"] = 2;\nstd::cout << root_node << std::endl;\n```\n\nThe output is truncated after the tag instead of preserving the tagged value and\nthe following mapping entry. The exact emitted mapping (without an additional\ntrailing newline) should be `some_string: !!str hello\\nsome_int: 2`. A primary\ntag such as `!mytag` should likewise remain `v: !mytag hello`.\n\nThis report concerns the `!!str` secondary-handle case shown above; it does not\nrequire behavior for unrelated secondary handles.\n",
+  "hints_text": ""
+}

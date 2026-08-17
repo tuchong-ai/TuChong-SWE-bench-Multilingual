@@ -1,0 +1,63 @@
+diff --git a/include/cxxopts.hpp b/include/cxxopts.hpp
+index 6bf57a6..c87caf8 100644
+--- a/include/cxxopts.hpp
++++ b/include/cxxopts.hpp
+@@ -1140,13 +1140,57 @@ parse_value(const std::string& text, std::string& value)
+ // that have not been overloaded explicitly.  It has to be placed in the
+ // source code before all other more specialized templates.
+ template <typename T,
+-         typename std::enable_if<!std::is_integral<T>::value>::type* = nullptr
++         typename std::enable_if<!std::is_integral<T>::value &&
++                                 !std::is_floating_point<T>::value>::type* = nullptr
+          >
+ void
+ parse_value(const std::string& text, T& value) {
+   stringstream_parser(text, value);
+ }
+ 
++// Parse the special floating-point values inf, infinity and nan (with an
++// optional sign and any letter case), which the stringstream parser does
++// not handle. All other inputs are delegated to the stringstream parser.
++template <typename T,
++         typename std::enable_if<std::is_floating_point<T>::value>::type* = nullptr
++         >
++void
++parse_value(const std::string& text, T& value)
++{
++  std::string special(text);
++  bool negative = false;
++
++  if (!special.empty() && (special.front() == '+' || special.front() == '-'))
++  {
++    negative = special.front() == '-';
++    special.erase(0, 1);
++  }
++
++  for (auto& c : special)
++  {
++    if (c >= 'A' && c <= 'Z')
++    {
++      c = static_cast<char>(c - 'A' + 'a');
++    }
++  }
++
++  if (special == "inf" || special == "infinity")
++  {
++    value = negative ? -std::numeric_limits<T>::infinity()
++                     : std::numeric_limits<T>::infinity();
++    return;
++  }
++
++  if (special == "nan")
++  {
++    value = negative ? -std::numeric_limits<T>::quiet_NaN()
++                     : std::numeric_limits<T>::quiet_NaN();
++    return;
++  }
++
++  stringstream_parser(text, value);
++}
++
+ #ifdef CXXOPTS_HAS_OPTIONAL
+ template <typename T>
+ void

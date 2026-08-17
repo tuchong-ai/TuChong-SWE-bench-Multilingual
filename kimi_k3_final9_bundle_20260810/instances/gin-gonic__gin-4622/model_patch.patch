@@ -1,0 +1,24 @@
+diff --git a/context.go b/context.go
+index 640e20b..e3069cb 100644
+--- a/context.go
++++ b/context.go
+@@ -738,11 +738,14 @@ func (c *Context) SaveUploadedFile(file *multipart.FileHeader, dst string, perm
+ 		mode = perm[0]
+ 	}
+ 	dir := filepath.Dir(dst)
+-	if err = os.MkdirAll(dir, mode); err != nil {
+-		return err
+-	}
+-	if err = os.Chmod(dir, mode); err != nil {
+-		return err
++	info, statErr := os.Stat(dir)
++	if statErr != nil || !info.IsDir() {
++		if err = os.MkdirAll(dir, mode); err != nil {
++			return err
++		}
++		if err = os.Chmod(dir, mode); err != nil {
++			return err
++		}
+ 	}
+ 
+ 	out, err := os.Create(dst)

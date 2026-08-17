@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.1",
+  "instance_id": "jarro2783__cxxopts-314",
+  "repo": "jarro2783/cxxopts",
+  "base_commit": "654d63dfae872db7cd9a1e9245a930c76cfcc8bb",
+  "version": "",
+  "problem_statement": "cxxopts rejects standard special floating-point values when they are supplied to options declared as `float`, `double`, or `long double`.\n\nFor example:\n\n```cpp\ncxxopts::Options options(\"special-floats\");\noptions.add_options()\n  (\"double\", \"Double precision\", cxxopts::value<double>())\n  (\"long-double\", \"Extended precision\", cxxopts::value<long double>())\n  (\"positional\", \"Floats\", cxxopts::value<std::vector<float>>());\n```\n\nParsing arguments such as `--double inf`, `--long-double infinity`, and positional values `-inf` or `nan` should succeed. The resulting values must preserve whether they are infinite, their sign, or whether they are NaN. Invalid non-numeric values such as `abc` must continue to raise `cxxopts::exceptions::incorrect_argument_type`.\n\nCurrently, the special values are rejected instead of being returned as floating-point values.",
+  "hints_text": ""
+}

@@ -1,0 +1,64 @@
+diff --git a/src/widgets/bar/lv_bar.c b/src/widgets/bar/lv_bar.c
+index 64d436d..818a757 100644
+--- a/src/widgets/bar/lv_bar.c
++++ b/src/widgets/bar/lv_bar.c
+@@ -435,9 +435,9 @@ static void draw_indic(lv_event_t * e)
+ 
+     if(LV_BAR_IS_ANIMATING(bar->start_value_anim)) {
+         int32_t anim_start_value_start_x =
+-            (int32_t)((int32_t)anim_length * (bar->start_value_anim.anim_start - bar->min_value)) / range;
++            (int32_t)(((int64_t)anim_length * (bar->start_value_anim.anim_start - bar->min_value)) / range);
+         int32_t anim_start_value_end_x =
+-            (int32_t)((int32_t)anim_length * (bar->start_value_anim.anim_end - bar->min_value)) / range;
++            (int32_t)(((int64_t)anim_length * (bar->start_value_anim.anim_end - bar->min_value)) / range);
+ 
+         anim_start_value_x = (((anim_start_value_end_x - anim_start_value_start_x) * bar->start_value_anim.anim_state) /
+                               LV_BAR_ANIM_STATE_END);
+@@ -445,21 +445,21 @@ static void draw_indic(lv_event_t * e)
+         anim_start_value_x += anim_start_value_start_x;
+     }
+     else {
+-        anim_start_value_x = (int32_t)((int32_t)anim_length * (bar->start_value - bar->min_value)) / range;
++        anim_start_value_x = (int32_t)(((int64_t)anim_length * (bar->start_value - bar->min_value)) / range);
+     }
+ 
+     if(LV_BAR_IS_ANIMATING(bar->cur_value_anim)) {
+         int32_t anim_cur_value_start_x =
+-            (int32_t)((int32_t)anim_length * (bar->cur_value_anim.anim_start - bar->min_value)) / range;
++            (int32_t)(((int64_t)anim_length * (bar->cur_value_anim.anim_start - bar->min_value)) / range);
+         int32_t anim_cur_value_end_x =
+-            (int32_t)((int32_t)anim_length * (bar->cur_value_anim.anim_end - bar->min_value)) / range;
++            (int32_t)(((int64_t)anim_length * (bar->cur_value_anim.anim_end - bar->min_value)) / range);
+ 
+         anim_cur_value_x = anim_cur_value_start_x + (((anim_cur_value_end_x - anim_cur_value_start_x) *
+                                                       bar->cur_value_anim.anim_state) /
+                                                      LV_BAR_ANIM_STATE_END);
+     }
+     else {
+-        anim_cur_value_x = (int32_t)((int32_t)anim_length * (bar->cur_value - bar->min_value)) / range;
++        anim_cur_value_x = (int32_t)(((int64_t)anim_length * (bar->cur_value - bar->min_value)) / range);
+     }
+ 
+     /**
+diff --git a/src/widgets/slider/lv_slider.c b/src/widgets/slider/lv_slider.c
+index 817e0c1..86e6932 100644
+--- a/src/widgets/slider/lv_slider.c
++++ b/src/widgets/slider/lv_slider.c
+@@ -602,7 +602,7 @@ static void update_knob_pos(lv_obj_t * obj, bool check_drag)
+             new_value = p.x - (obj->coords.x1 + bg_left);
+         }
+         if(indic_w) {
+-            new_value = (new_value * range + indic_w / 2) / indic_w;
++            new_value = (int32_t)(((int64_t)new_value * range + indic_w / 2) / indic_w);
+             new_value += slider->bar.min_value;
+         }
+     }
+@@ -621,7 +621,7 @@ static void update_knob_pos(lv_obj_t * obj, bool check_drag)
+             new_value = p.y - (obj->coords.y2 + bg_bottom);
+             new_value = -new_value;
+         }
+-        new_value = (new_value * range + indic_h / 2) / indic_h;
++        new_value = (int32_t)(((int64_t)new_value * range + indic_h / 2) / indic_h);
+         new_value += slider->bar.min_value;
+     }
+ 

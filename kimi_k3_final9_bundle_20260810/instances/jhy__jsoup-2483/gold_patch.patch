@@ -1,0 +1,69 @@
+diff --git a/CHANGES.md b/CHANGES.md
+--- a/CHANGES.md
++++ b/CHANGES.md
+@@ -13,6 +13,7 @@
+ * `Cleaner` no longer makes relative URL attributes in the input document absolute when cleaning or validating a `Document`. URL normalization now applies only to the cleaned output, and `Safelist.isSafeAttribute()` is side effect free. [#2475](https://github.com/jhy/jsoup/issues/2475)
+ * `Cleaner` no longer duplicates enforced attributes when the input `Document` preserves attribute case. A case-variant source attribute is now replaced by the enforced attribute in the cleaned output. [#2476](https://github.com/jhy/jsoup/issues/2476)
+ * If a per-request SOCKS proxy is configured, jsoup now avoids using the JDK `HttpClient`, because the JDK would silently ignore that proxy and attempt to connect directly. Those requests now fall back to the legacy `HttpURLConnection` transport instead, which does support SOCKS. [#2468](https://github.com/jhy/jsoup/issues/2468)
++* `Connection.Response.streamParser()` and `DataUtil.streamParser(Path, ...)` could fail on small inputs without a declared charset, if the initial 5 KB charset sniff fully consumed the input and closed it before the stream parse began. [#2483](https://github.com/jhy/jsoup/issues/2483)
+ 
+ ## 1.22.1 (2026-Jan-01)
+ 
+diff --git a/src/main/java/org/jsoup/helper/DataUtil.java b/src/main/java/org/jsoup/helper/DataUtil.java
+--- a/src/main/java/org/jsoup/helper/DataUtil.java
++++ b/src/main/java/org/jsoup/helper/DataUtil.java
+@@ -140,7 +140,7 @@ public static StreamParser streamParser(Path path, @Nullable Charset charset, St
+         StreamParser streamer = new StreamParser(parser);
+         String charsetName = charset != null? charset.name() : null;
+         try {
+-            DataUtil.CharsetDoc charsetDoc = DataUtil.detectCharset(openStream(path), charsetName, baseUri, parser);
++            DataUtil.CharsetDoc charsetDoc = DataUtil.detectCharsetForStreamParser(openStream(path), charsetName, baseUri, parser);
+             Reader reader = new SimpleStreamReader(charsetDoc.input, charsetDoc.charset);
+             streamer.parse(reader, baseUri); // initializes the parse and the document, but does not step() it
+         } catch (IOException e) {
+@@ -237,7 +237,18 @@ static Document parseInputStream(@Nullable ControllableInputStream input, @Nulla
+ 
+     private static final Evaluator metaCharset = Selector.evaluatorOf("meta[http-equiv=content-type], meta[charset]");
+ 
++    /** Detects charset for a regular parse, and may reuse a fully sniffed document. */
+     static CharsetDoc detectCharset(ControllableInputStream input, @Nullable String charsetName, String baseUri, Parser parser) throws IOException {
++        return detectCharset(input, charsetName, baseUri, parser, true);
++    }
++
++    /** Detects charset for a stream parse, and leaves the input readable for subsequent parsing. */
++    static CharsetDoc detectCharsetForStreamParser(ControllableInputStream input, @Nullable String charsetName, String baseUri, Parser parser) throws IOException {
++        return detectCharset(input, charsetName, baseUri, parser, false);
++    }
++
++    /** Shared charset detection worker; regular parse can reuse a fully sniffed doc, stream parse cannot. */
++    private static CharsetDoc detectCharset(ControllableInputStream input, @Nullable String charsetName, String baseUri, Parser parser, boolean reuseDocIfFullyRead) throws IOException {
+         Document doc = null;
+         // read the start of the stream and look for a BOM or meta charset:
+         // look for BOM - overrides any other header or input
+@@ -293,7 +304,7 @@ else if (first instanceof Comment) {
+                 foundCharset = foundCharset.trim().replaceAll("[\"']", "");
+                 charsetName = foundCharset;
+                 doc = null;
+-            } else if (input.baseReadFully()) { // if we have read fully, and the charset was correct, keep that current parse
++            } else if (reuseDocIfFullyRead && input.baseReadFully()) { // keep the current parse if the caller can use a fully read doc
+                 input.close(); // the parser tried to close it
+             } else {
+                 doc = null;
+diff --git a/src/main/java/org/jsoup/helper/HttpConnection.java b/src/main/java/org/jsoup/helper/HttpConnection.java
+--- a/src/main/java/org/jsoup/helper/HttpConnection.java
++++ b/src/main/java/org/jsoup/helper/HttpConnection.java
+@@ -1012,12 +1012,11 @@ private ControllableInputStream prepareParse() {
+         @Override public StreamParser streamParser() throws IOException {
+             ControllableInputStream stream = prepareParse();
+             String baseUri = url.toExternalForm();
+-            DataUtil.CharsetDoc charsetDoc = DataUtil.detectCharset(stream, charset, baseUri, req.parser());
+-            // note that there may be a document in CharsetDoc as a result of scanning meta-data -- but as requires a stream parse, it is not used here. todo - revisit.
++            DataUtil.CharsetDoc charsetDoc = DataUtil.detectCharsetForStreamParser(stream, charset, baseUri, req.parser());
+ 
+             // set up the stream parser and rig this connection up to the parsed doc:
+             StreamParser streamer = new StreamParser(req.parser());
+-            BufferedReader reader = new BufferedReader(new InputStreamReader(stream, charsetDoc.charset));
++            BufferedReader reader = new BufferedReader(new InputStreamReader(charsetDoc.input, charsetDoc.charset));
+             streamer.parse(reader, baseUri); // initializes the parse and the document, but does not step() it
+             streamer.document().connection(new HttpConnection(req, this));
+             charset = charsetDoc.charset.name();

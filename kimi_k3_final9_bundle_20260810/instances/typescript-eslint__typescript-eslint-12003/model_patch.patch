@@ -1,0 +1,35 @@
+diff --git a/packages/eslint-plugin/src/util/referenceContainsTypeQuery.ts b/packages/eslint-plugin/src/util/referenceContainsTypeQuery.ts
+index 2d5a42a..d702f0b 100644
+--- a/packages/eslint-plugin/src/util/referenceContainsTypeQuery.ts
++++ b/packages/eslint-plugin/src/util/referenceContainsTypeQuery.ts
+@@ -3,19 +3,28 @@ import type { TSESTree } from '@typescript-eslint/utils';
+ import { AST_NODE_TYPES } from '@typescript-eslint/utils';
+ 
+ /**
+- * Recursively checks whether a given reference has a type query declaration among its parents
++ * Recursively checks whether a given reference is in a type position that
++ * reads a value, such as a type query (`typeof foo`) or a type predicate
++ * (`foo is T`).
+  */
+ export function referenceContainsTypeQuery(node: TSESTree.Node): boolean {
+   switch (node.type) {
+     case AST_NODE_TYPES.TSTypeQuery:
+       return true;
+ 
++    case AST_NODE_TYPES.TSTypePredicate:
++      // an assertion signature `asserts foo is T` is a value usage, since it
++      // asserts the value at runtime; otherwise the predicate's parameter
++      // name is only used in a type position
++      return !node.asserts;
++
+     case AST_NODE_TYPES.TSQualifiedName:
+     case AST_NODE_TYPES.Identifier:
+       return referenceContainsTypeQuery(node.parent);
+ 
+     default:
+-      // if we find a different node, there's no chance that we're in a TSTypeQuery
++      // if we find a different node, there's no chance that we're in a
++      // type-only position
+       return false;
+   }
+ }

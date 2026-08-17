@@ -1,0 +1,42 @@
+TuChong SWE-bench-Multilingual — Demo Dataset License
+Copyright (c) 2026 Tuchong AI (图虫)
+
+1. Grant of Rights
+
+   The demo dataset in this repository ("Demo Data") — including task
+   definitions, patches, environment recipes, image manifests, agent
+   trajectories, and documentation — is made available free of charge
+   for academic research and evaluation purposes.
+
+2. Restrictions
+
+   a. Demo Data is limited to academic research and evaluation use.
+      Commercial use requires a separate written license from Tuchong AI.
+   b. Redistribution or re-release of the Demo Data, in whole or in part,
+      is not permitted without prior written authorization.
+   c. When Demo Data is used to produce published results, citation of
+      "TuChong SWE-bench-Multilingual" (with repository URL) is required.
+
+3. Upstream Content
+
+   Tasks are derived from public GitHub repositories under their own
+   open-source licenses (MIT). The applicable upstream license text is
+   preserved in each instance directory (UPSTREAM_LICENSE.txt), and all
+   rights in upstream code remain with their respective owners. Nothing
+   in this License modifies the terms of those upstream licenses.
+
+4. Disclaimer of Warranty
+
+   THE DEMO DATA IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+   NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS
+   BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN
+   ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+   CONNECTION WITH THE DEMO DATA OR THE USE OR OTHER DEALINGS IN THE
+   DEMO DATA.
+
+5. Contact
+
+   For commercial licensing or the full benchmark, contact Tuchong AI
+   (see the repository README for contact channels).

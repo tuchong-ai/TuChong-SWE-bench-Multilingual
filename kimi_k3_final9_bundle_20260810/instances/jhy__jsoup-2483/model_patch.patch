@@ -1,0 +1,20 @@
+diff --git a/src/main/java/org/jsoup/helper/DataUtil.java b/src/main/java/org/jsoup/helper/DataUtil.java
+index 4124fe4..bc6ae4b 100644
+--- a/src/main/java/org/jsoup/helper/DataUtil.java
++++ b/src/main/java/org/jsoup/helper/DataUtil.java
+@@ -293,11 +293,12 @@ public final class DataUtil {
+                 foundCharset = foundCharset.trim().replaceAll("[\"']", "");
+                 charsetName = foundCharset;
+                 doc = null;
+-            } else if (input.baseReadFully()) { // if we have read fully, and the charset was correct, keep that current parse
+-                input.close(); // the parser tried to close it
+-            } else {
++            } else if (!input.baseReadFully()) { // not read fully, so will re-read the input from the start
+                 doc = null;
+             }
++            // if we have read fully and the charset was correct, keep that current parse (doc). The input is left open
++            // (the parser tried to close it), reset to the start, so that a streamParser caller can re-read it;
++            // parseInputStream closes it in its finally block
+         } else { // specified by content type header (or by user on file load)
+             Validate.notEmpty(charsetName, "Must set charset arg to character set of file to parse. Set to null to attempt to detect from HTML");
+         }

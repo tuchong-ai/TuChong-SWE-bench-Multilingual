@@ -1,0 +1,66 @@
+diff --git a/src/test/java/org/jsoup/helper/DataUtilTest.java b/src/test/java/org/jsoup/helper/DataUtilTest.java
+--- a/src/test/java/org/jsoup/helper/DataUtilTest.java
++++ b/src/test/java/org/jsoup/helper/DataUtilTest.java
+@@ -199,6 +199,14 @@ public void streamerSupportsBOMinFiles() throws IOException {
+         assertTrue(doc.text().contains("가각갂갃간갅"));
+     }
+ 
++    @Test
++    public void streamParserWorksWhenCharsetDetectionFullyReadsFile() throws IOException {
++        // small enough to be fully consumed during charset sniffing
++        Path in = getPath("/htmltests/charset-base.html");
++        Document doc = DataUtil.streamParser(in, null, "http://example.com", Parser.htmlParser()).complete();
++        assertEquals("http://example.com/foo.jpg", doc.select("img").first().absUrl("src"));
++    }
++
+     @Test
+     public void supportsUTF8BOM() throws IOException {
+         File in = getFile("/bomtests/bom_utf8.html");
+diff --git a/src/test/java/org/jsoup/integration/ConnectTest.java b/src/test/java/org/jsoup/integration/ConnectTest.java
+--- a/src/test/java/org/jsoup/integration/ConnectTest.java
++++ b/src/test/java/org/jsoup/integration/ConnectTest.java
+@@ -405,21 +405,40 @@ public void multipleParsesOkAfterReadFully() throws IOException {
+         Connection.Response res = Jsoup.connect(echoUrl).execute().readFully();
+ 
+         Document doc = res.parse();
+-        assertTrue(doc.title().contains("Environment"));
++        assertEquals("Webserver Environment Variables", doc.title());
+ 
+         Document doc2 = res.parse();
+-        assertTrue(doc2.title().contains("Environment"));
++        assertEquals("Webserver Environment Variables", doc2.title());
+     }
+ 
+     @Test
+     public void multipleParsesOkAfterBufferUp() throws IOException {
+         Connection.Response res = Jsoup.connect(echoUrl).execute().bufferUp();
+ 
+         Document doc = res.parse();
+-        assertTrue(doc.title().contains("Environment"));
++        assertEquals("Webserver Environment Variables", doc.title());
+ 
+         Document doc2 = res.parse();
+-        assertTrue(doc2.title().contains("Environment"));
++        assertEquals("Webserver Environment Variables", doc2.title());
++    }
++
++    @Test
++    public void bufferedParseWorksWhenCharsetDetectionFullyReadsResponse() throws IOException {
++        Connection.Response res = Jsoup.connect(FileServlet.urlTo("/htmltests/charset-base.html")).execute().bufferUp();
++
++        Document doc = res.parse();
++        assertEquals("UTF-8", res.charset());
++        assertEquals("http://example.com/foo.jpg", doc.expectFirst("img").absUrl("src"));
++    }
++
++    @Test
++    public void bufferedStreamParserWorksWhenCharsetDetectionFullyReadsResponse() throws IOException {
++        // https://github.com/jhy/jsoup/issues/2483
++        Connection.Response res = Jsoup.connect(FileServlet.urlTo("/htmltests/charset-base.html")).execute().bufferUp();
++
++        Document doc = res.streamParser().complete();
++        assertEquals("UTF-8", res.charset());
++        assertEquals("http://example.com/foo.jpg", doc.expectFirst("img").absUrl("src"));
+     }
+ 
+     @Test

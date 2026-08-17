@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.1",
+  "instance_id": "c-ares__c-ares-1137",
+  "repo": "c-ares/c-ares",
+  "base_commit": "17dbbbd4fdbfe188e1fd84a8fdf999afceb66063",
+  "version": "",
+  "problem_statement": "Currently, c-ares accepts multiple OPT records in a single DNS response without rejecting the message. \n\nAccording to RFC 6891 Section 6.1.1: *\"There MUST be at most one OPT pseudo-RR in the Additional Data section of a message. If a query message with more than one OPT RR is received, a FORMERR (Format Error) MUST be returned.\"*\n\nAllowing a second OPT record could potentially overwrite extended RCODE bits or inject unexpected EDNS options. For comparison, resolvers like unbound reject a second OPT record with `FORMERR` during message parsing.\n\n**To Reproduce**\nParse a crafted DNS response containing more than one OPT record in the Additional Data section using `ares_dns_parse`. c-ares will successfully parse the response instead of throwing a format error.\n\n**Expected behavior**\nc-ares should reject the response, and `ares_dns_parse` should return `ARES_EBADRESP` when a second OPT record is encountered during parsing.\n\n**Version info**\n* **c-ares version:** `main` (Tested against commit `0752823`)\n\n**Additional context**\nThis was originally submitted to the c-ares security list, but it was agreed to be tracked as a standard protocol compliance bug rather than a security vulnerability.",
+  "hints_text": ""
+}

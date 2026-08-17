@@ -1,0 +1,41 @@
+diff --git a/command.go b/command.go
+index cfdc560..7f9c4aa 100644
+--- a/command.go
++++ b/command.go
+@@ -582,15 +582,28 @@ func (cmd *Command) NArg() int {
+ 
+ func (cmd *Command) runFlagActions(ctx context.Context) error {
+ 	tracef("runFlagActions")
+-	for fl := range cmd.setFlags {
+-		/*tracef("checking %v:%v", fl.Names(), fl.IsSet())
+-		if !fl.IsSet() {
+-			continue
+-		}*/
+ 
+-		//if pf, ok := fl.(LocalFlag); ok && !pf.IsLocal() {
+-		//	continue
+-		//}
++	// Gather the flags in a deterministic order (flag definition order)
++	// so that flag actions are run in the same order regardless of the
++	// order in which the flags were provided on the command line. Flags
++	// from ancestor commands are included since persistent flags can be
++	// set from this command's arguments.
++	var flags []Flag
++	seen := map[Flag]struct{}{}
++	for pCmd := cmd; pCmd != nil; pCmd = pCmd.parent {
++		for _, fl := range pCmd.allFlags() {
++			if _, ok := seen[fl]; ok {
++				continue
++			}
++			seen[fl] = struct{}{}
++			flags = append(flags, fl)
++		}
++	}
++
++	for _, fl := range flags {
++		if _, ok := cmd.setFlags[fl]; !ok {
++			continue
++		}
+ 
+ 		if af, ok := fl.(ActionableFlag); ok {
+ 			if err := af.RunAction(ctx, cmd); err != nil {
