@@ -240,7 +240,7 @@ If this dataset supports your research, please cite:
 
 | Channel · 渠道 | Contact · 联系方式 |
 | :--- | :--- |
-| 📧 **Email · 邮箱** | <picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/tuchong-ai/TuChong-SWE-bench-Multilingual/main/assets/email-dark.png"><img src="https://raw.githubusercontent.com/tuchong-ai/TuChong-SWE-bench-Multilingual/main/assets/email-light.png" alt="zhangjinpeng at mail.tuchong.com" width="246" height="26"></picture> |
+| 📧 **Email · 邮箱** | <a href="mailto:&#122;&#104;&#97;&#110;&#103;&#106;&#105;&#110;&#112;&#101;&#110;&#103;&#64;&#109;&#97;&#105;&#108;&#46;&#116;&#117;&#99;&#104;&#111;&#110;&#103;&#46;&#99;&#111;&#109;">&#122;&#104;&#97;&#110;&#103;&#106;&#105;&#110;&#112;&#101;&#110;&#103;&#64;&#109;&#97;&#105;&#108;&#46;&#116;&#117;&#99;&#104;&#111;&#110;&#103;&#46;&#99;&#111;&#109;</a> |
 | 🌐 **AIGC Data Platform · 数据平台** | [stock.tuchong.com/landing-page/aigc](https://stock.tuchong.com/landing-page/aigc?source=tc_pc_home) |
 | 🏢 **Organization · 组织** | [github.com/tuchong-ai](https://github.com/tuchong-ai) |
 
