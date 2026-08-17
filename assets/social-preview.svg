@@ -15,58 +15,60 @@
 
   <!-- subtle grid -->
   <g stroke="#1e293b" stroke-width="1" opacity="0.35">
-    <path d="M80 0V640M240 0V640M400 0V640M560 0V640M720 0V640M880 0V640M1040 0V640M1200 0V640"/>
-    <path d="M0 120H1280M0 260H1280M0 400H1280M0 540H1280"/>
+    <path d="M160 0V640M320 0V640M480 0V640M640 0V640M800 0V640M960 0V640M1120 0V640"/>
+    <path d="M0 80H1280M0 448H1280"/>
   </g>
 
-  <!-- accent bar -->
-  <rect x="96" y="132" width="120" height="8" rx="4" fill="url(#accent)"/>
+  <!-- brand -->
+  <text x="96" y="132" font-family="'Helvetica Neue','PingFang SC',Arial,sans-serif" font-size="23" font-weight="600" letter-spacing="8" fill="#60a5fa">TUCHONG AI</text>
+  <rect x="96" y="148" width="120" height="7" rx="3.5" fill="url(#accent)"/>
 
-  <!-- title -->
-  <text x="96" y="212" font-family="'Helvetica Neue','PingFang SC','Segoe UI',Arial,sans-serif" font-size="64" font-weight="700" fill="#f8fafc">TuChong SWE-bench-Multilingual</text>
+  <!-- main title -->
+  <text x="96" y="222" font-family="'Helvetica Neue','PingFang SC',Arial,sans-serif" font-size="62" font-weight="700" fill="#f8fafc">SWE-bench-Multilingual</text>
 
-  <!-- subtitle -->
-  <text x="96" y="272" font-family="'Helvetica Neue','PingFang SC','Segoe UI',Arial,sans-serif" font-size="30" font-weight="400" fill="#94a3b8">多语言软件工程评测基准 · Verifiable environments, reproducible agent trajectories</text>
+  <!-- subtitles -->
+  <text x="96" y="272" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="27" fill="#94a3b8">面向多语言真实软件工程场景的智能体评测基准</text>
+  <text x="96" y="308" font-family="'Helvetica Neue',Arial,sans-serif" font-size="21" fill="#64748b">Verifiable environments · Reproducible agent trajectories · SWE-bench compatible</text>
 
   <!-- stat chips -->
-  <g font-family="'Helvetica Neue','PingFang SC','Segoe UI',Arial,sans-serif">
+  <g font-family="'Helvetica Neue',Arial,sans-serif">
     <g>
-      <rect x="96" y="336" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
-      <text x="218" y="378" font-size="34" font-weight="700" fill="#60a5fa" text-anchor="middle">9</text>
-      <text x="218" y="412" font-size="19" fill="#cbd5e1" text-anchor="middle">Instances · 实例</text>
+      <rect x="96" y="340" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
+      <text x="218" y="382" font-size="36" font-weight="700" fill="#60a5fa" text-anchor="middle">9</text>
+      <text x="218" y="414" font-size="18" fill="#cbd5e1" text-anchor="middle">Instances</text>
     </g>
     <g>
-      <rect x="364" y="336" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
-      <text x="486" y="378" font-size="34" font-weight="700" fill="#34d399" text-anchor="middle">5</text>
-      <text x="486" y="412" font-size="19" fill="#cbd5e1" text-anchor="middle">Languages · 语言</text>
+      <rect x="364" y="340" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
+      <text x="486" y="382" font-size="36" font-weight="700" fill="#34d399" text-anchor="middle">5</text>
+      <text x="486" y="414" font-size="18" fill="#cbd5e1" text-anchor="middle">Languages</text>
     </g>
     <g>
-      <rect x="632" y="336" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
-      <text x="754" y="378" font-size="34" font-weight="700" fill="#a78bfa" text-anchor="middle">9/9</text>
-      <text x="754" y="412" font-size="19" fill="#cbd5e1" text-anchor="middle">FULL · 解决率</text>
+      <rect x="632" y="340" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
+      <text x="754" y="382" font-size="36" font-weight="700" fill="#a78bfa" text-anchor="middle">9/9</text>
+      <text x="754" y="414" font-size="18" fill="#cbd5e1" text-anchor="middle">FULL resolved</text>
     </g>
     <g>
-      <rect x="900" y="336" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
-      <text x="1022" y="378" font-size="34" font-weight="700" fill="#fbbf24" text-anchor="middle">Docker ×9</text>
-      <text x="1022" y="412" font-size="19" fill="#cbd5e1" text-anchor="middle">Pinned · 钉定环境</text>
+      <rect x="900" y="340" width="244" height="96" rx="14" fill="#16213a" stroke="#243050"/>
+      <text x="1022" y="382" font-size="36" font-weight="700" fill="#fbbf24" text-anchor="middle">Docker ×9</text>
+      <text x="1022" y="414" font-size="18" fill="#cbd5e1" text-anchor="middle">Pinned images</text>
     </g>
   </g>
 
   <!-- language tags -->
   <g font-family="'SF Mono',Menlo,Consolas,monospace" font-size="21">
-    <rect x="96" y="472" width="88" height="40" rx="8" fill="none" stroke="#3b82f6"/>
-    <text x="140" y="499" fill="#93c5fd" text-anchor="middle">C</text>
-    <rect x="198" y="472" width="88" height="40" rx="8" fill="none" stroke="#3b82f6"/>
+    <rect x="96" y="472" width="84" height="40" rx="8" fill="none" stroke="#3b82f6"/>
+    <text x="138" y="499" fill="#93c5fd" text-anchor="middle">C</text>
+    <rect x="194" y="472" width="96" height="40" rx="8" fill="none" stroke="#3b82f6"/>
     <text x="242" y="499" fill="#93c5fd" text-anchor="middle">C++</text>
-    <rect x="300" y="472" width="88" height="40" rx="8" fill="none" stroke="#10b981"/>
-    <text x="344" y="499" fill="#6ee7b7" text-anchor="middle">Go</text>
-    <rect x="402" y="472" width="88" height="40" rx="8" fill="none" stroke="#f59e0b"/>
-    <text x="446" y="499" fill="#fcd34d" text-anchor="middle">Java</text>
-    <rect x="504" y="472" width="130" height="40" rx="8" fill="none" stroke="#8b5cf6"/>
-    <text x="569" y="499" fill="#c4b5fd" text-anchor="middle">TypeScript</text>
+    <rect x="304" y="472" width="88" height="40" rx="8" fill="none" stroke="#10b981"/>
+    <text x="348" y="499" fill="#6ee7b7" text-anchor="middle">Go</text>
+    <rect x="406" y="472" width="96" height="40" rx="8" fill="none" stroke="#f59e0b"/>
+    <text x="454" y="499" fill="#fcd34d" text-anchor="middle">Java</text>
+    <rect x="516" y="472" width="150" height="40" rx="8" fill="none" stroke="#8b5cf6"/>
+    <text x="591" y="499" fill="#c4b5fd" text-anchor="middle">TypeScript</text>
   </g>
 
   <!-- footer -->
   <rect x="96" y="588" width="1088" height="3" rx="1.5" fill="url(#accent)" opacity="0.6"/>
-  <text x="96" y="572" font-family="'Helvetica Neue','PingFang SC','Segoe UI',Arial,sans-serif" font-size="22" fill="#64748b">Tuchong AI · github.com/tuchong-ai/TuChong-SWE-bench-Multilingual · demo-2026-08-10</text>
+  <text x="96" y="568" font-family="'SF Mono',Menlo,monospace" font-size="19" fill="#64748b">github.com/tuchong-ai/TuChong-SWE-bench-Multilingual · demo-2026-08-10</text>
 </svg>
