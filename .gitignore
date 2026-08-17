@@ -1,0 +1,12 @@
+# OS
+.DS_Store
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+
+# Decompressed Docker image tar from Quick Start step 4
+# (the zst archive itself is a Release asset, not tracked)
+images/docker-images.tar

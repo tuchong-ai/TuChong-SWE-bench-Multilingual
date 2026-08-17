@@ -84,9 +84,9 @@ TuChong-SWE-bench-Multilingual/
 └── assets/                     # Repo assets (contact email SVG) · 仓库资源
 ```
 
-> The 1.4 GB Docker image archive exceeds GitHub's file-size limit for git, so it is distributed as a [Release asset](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10) instead of a committed file. Everything else in this repository is byte-identical to the canonical bundle.
+> The 1.4 GB Docker image archive exceeds GitHub's file-size limit for git, so it is distributed as a [Release asset](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10) instead of a committed file. All dataset payload files (`instances/`, `images/images.jsonl`, `INDEX.jsonl`, `DATA_CARD.md`, `bundle.json`) are byte-identical to the canonical bundle; only packaging metadata (`README.md`, `CHECKSUMS.sha256`, `tools/verify_dataset.py`, `LICENSE`) is adapted to the repository layout.
 >
-> 1.4 GB 的 Docker 镜像包超出 GitHub 单文件限制，因此通过 [Release 资产](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10)分发而非直接入库；仓库中的其余文件与正式数据包逐字节一致。
+> 1.4 GB 的 Docker 镜像包超出 GitHub 单文件限制，因此通过 [Release 资产](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10)分发而非直接入库；全部数据载荷文件（`instances/`、`images/images.jsonl`、`INDEX.jsonl`、`DATA_CARD.md`、`bundle.json`）与正式数据包逐字节一致，仅包装元数据（`README.md`、`CHECKSUMS.sha256`、`tools/verify_dataset.py`、`LICENSE`）为适配仓库布局有所调整。
 
 | Asset · 资产 | Location · 位置 | SHA-256 |
 | :--- | :--- | :--- |
