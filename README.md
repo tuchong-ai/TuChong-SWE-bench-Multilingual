@@ -189,7 +189,7 @@ Full methodology, disclosure, and known limitations: [`DATA_CARD.md`](DATA_CARD.
 | :--- | :--- |
 | `trajectory.canonical.jsonl` | Deduplicated canonical conversation — for training or human reading · 去重后的规范对话，用于训练或人工研读 |
 | `trajectory.full.jsonl` | Complete call-level API records — for auditing and protocol research · 完整调用级 API 记录，用于审计与协议研究 |
-| `model_input.json` | The only file intended to be fed to a model · 唯一建议直接输入模型 的文件 |
+| `model_input.json` | The only file intended to be fed to a model · 唯一建议直接输入模型的文件 |
 
 - Both trajectory formats are fully redacted (`redact_mode: full`): user paths, emails, and credentials are cleaned.
 - 两种轨迹格式均经过完整脱敏（`redact_mode: full`）：用户路径、邮箱与凭据已清理。
