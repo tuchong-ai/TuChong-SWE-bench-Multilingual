@@ -240,7 +240,7 @@ If this dataset supports your research, please cite:
 
 | Channel · 渠道 | Contact · 联系方式 |
 | :--- | :--- |
-| 📧 **Email · 邮箱** | <img src="assets/email.svg" alt="zhangjinpeng at mail.tuchong.com" width="246" height="26"> |
+| 📧 **Email · 邮箱** | <img src="assets/email.png" alt="zhangjinpeng at mail.tuchong.com" width="246" height="26"> |
 | 🌐 **AIGC Data Platform · 数据平台** | [stock.tuchong.com/landing-page/aigc](https://stock.tuchong.com/landing-page/aigc?source=tc_pc_home) |
 | 🏢 **Organization · 组织** | [github.com/tuchong-ai](https://github.com/tuchong-ai) |
 
