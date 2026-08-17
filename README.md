@@ -58,6 +58,10 @@ This repository hosts the **first public demo release** (`demo-2026-08-10`): 9 f
 > \* `jarro2783__cxxopts-314` is rated **medium** solely due to issue age (2021 → 2026 fix interval) — a statistical risk factor, not evidence of memorization; the trajectory was screened for upstream-answer leakage. Full disclosure in [`DATA_CARD.md`](DATA_CARD.md).
 >
 > \* `jarro2783__cxxopts-314` 的 **medium** 评级仅源于 issue 年龄（2021 年提出、2026 年修复），属统计性风险而非记忆证据；轨迹已通过上游答案泄漏筛查。完整披露见 [`DATA_CARD.md`](DATA_CARD.md)。
+>
+> Task Type (bug-fix / feature) is an editorial classification assigned by the dataset curators for orientation; it is not a machine-readable field in this release.
+>
+> 任务类型（bug-fix / feature）为数据集编者标注的编辑性分类，仅作导览参考；本版数据中不含对应的机读字段。
 
 ---
 
@@ -89,6 +93,10 @@ TuChong-SWE-bench-Multilingual/
 > The 1.4 GB Docker image archive exceeds GitHub's file-size limit for git, so it is distributed as a [Release asset](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10) instead of a committed file. All dataset payload files (`instances/`, `images/images.jsonl`, `INDEX.jsonl`, `DATA_CARD.md`, `bundle.json`) are byte-identical to the canonical bundle; only packaging metadata (`README.md`, `CHECKSUMS.sha256`, `tools/verify_dataset.py`, `LICENSE`) is adapted to the repository layout.
 >
 > 1.4 GB 的 Docker 镜像包超出 GitHub 单文件限制，因此通过 [Release 资产](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10)分发而非直接入库；全部数据载荷文件（`instances/`、`images/images.jsonl`、`INDEX.jsonl`、`DATA_CARD.md`、`bundle.json`）与正式数据包逐字节一致，仅包装元数据（`README.md`、`CHECKSUMS.sha256`、`tools/verify_dataset.py`、`LICENSE`）为适配仓库布局有所调整。
+>
+> Note: the Docker image tags, image labels, and some script / metadata identifiers in this repository carry a `claudedata` prefix. It is an internal identifier inherited from the dataset production pipeline, is unrelated to any third-party company or product, and does not affect environment functionality.
+>
+> 说明：本仓库的 Docker 镜像标签、镜像 label 及部分脚本 / 元数据标识带有 `claudedata` 前缀。该前缀继承自数据生产流水线的内部标识，与任何第三方公司或产品无关，亦不影响环境功能。
 
 | Asset · 资产 | Location · 位置 | SHA-256 |
 | :--- | :--- | :--- |
@@ -180,6 +188,10 @@ Every instance passed the full ship gates before release:
 Full methodology, disclosure, and known limitations: [`DATA_CARD.md`](DATA_CARD.md) (English, canonical) · [`DATA_CARD.zh-CN.md`](DATA_CARD.zh-CN.md)（中文译本，如与英文版有出入以英文版为准）.
 
 完整方法论、披露事项与已知局限见 [`DATA_CARD.md`](DATA_CARD.md)（英文权威原版）· [`DATA_CARD.zh-CN.md`](DATA_CARD.zh-CN.md)（中文译本，如与英文版有出入以英文版为准）。
+
+> Disclosure items in [`DATA_CARD.md`](DATA_CARD.md) keep their numbering from the internal audit record: items #1–#2 were blocking findings resolved before release and are therefore not listed.
+>
+> [`DATA_CARD.md`](DATA_CARD.md) 中的披露条目沿用内部审计记录编号：#1–#2 为发布前已修复的阻断项，故未在卡中列出。
 
 ---
 
