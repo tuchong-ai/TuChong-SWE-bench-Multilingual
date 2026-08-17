@@ -53,7 +53,8 @@ PATCH_HEADER_RE = re.compile(r"^diff --git ", re.MULTILINE)
 # repository root, excluded from checksum coverage. Instance-level README.md
 # files under instances/ remain covered.
 EXCLUDE_DIRS = {"__pycache__", ".pytest_cache", ".mypy_cache", ".git", "node_modules", "assets"}
-EXCLUDE_FILES = {"CHECKSUMS.sha256", "README.md", "LICENSE", ".gitignore", "CITATION.cff"}
+EXCLUDE_FILES = {"CHECKSUMS.sha256", "README.md", "LICENSE", ".gitignore", "CITATION.cff",
+                 "DATA_CARD.zh-CN.md"}
 
 
 def check(name: str, ok: bool, detail: str = "") -> bool:

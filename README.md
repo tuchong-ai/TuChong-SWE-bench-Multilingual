@@ -67,7 +67,9 @@ This repository hosts the **first public demo release** (`demo-2026-08-10`): 9 f
 TuChong-SWE-bench-Multilingual/
 ├── README.md                   # This file · 本文件
 ├── LICENSE                     # Demo dataset license · 样例数据许可
-├── DATA_CARD.md                # Data card · 数据卡（元数据与质量口径）
+├── CITATION.cff                # Citation metadata · 引用元数据
+├── DATA_CARD.md                # Data card (canonical, EN) · 数据卡（权威英文原版）
+├── DATA_CARD.zh-CN.md          # Data card, Chinese translation · 数据卡中文译本
 ├── INDEX.jsonl                 # Instance index · 实例索引（9 条）
 ├── bundle.json                 # Machine-readable manifest · 机器可读清单
 ├── CHECKSUMS.sha256            # SHA-256 checksums · 校验和（141 条）
@@ -81,7 +83,7 @@ TuChong-SWE-bench-Multilingual/
 │   ├── base_commit.txt / gold_patch.patch / test_patch.patch / model_patch.patch
 │   ├── UPSTREAM_LICENSE.txt / task.jsonl / environment.json / model_input.json
 │   └── trajectory.canonical.jsonl / trajectory.full.jsonl / README.md
-└── assets/                     # Repo assets (contact email SVG) · 仓库资源
+└── assets/                     # Repo assets (contact email, social preview) · 仓库资源
 ```
 
 > The 1.4 GB Docker image archive exceeds GitHub's file-size limit for git, so it is distributed as a [Release asset](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10) instead of a committed file. All dataset payload files (`instances/`, `images/images.jsonl`, `INDEX.jsonl`, `DATA_CARD.md`, `bundle.json`) are byte-identical to the canonical bundle; only packaging metadata (`README.md`, `CHECKSUMS.sha256`, `tools/verify_dataset.py`, `LICENSE`) is adapted to the repository layout.
@@ -91,7 +93,11 @@ TuChong-SWE-bench-Multilingual/
 | Asset · 资产 | Location · 位置 | SHA-256 |
 | :--- | :--- | :--- |
 | Docker images (`linux/amd64`, 9 images) | [Release: `docker-images-linux-amd64.tar.zst`](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/download/demo-2026-08-10/docker-images-linux-amd64.tar.zst) | `ad1aed9238a3d5f783f983994cdeba7072953cf030cf4706b43fecbd0030d53a` |
-| Complete bundle (one-shot download) | [Release: `kimi_k3_final9_bundle_20260810.tar.zst`](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/download/demo-2026-08-10/kimi_k3_final9_bundle_20260810.tar.zst) | `378e73378dff720506c6cc17a2057935c74f21f7358eb3b0813c3d6b3715f2c4` |
+| Complete repository + images (one-shot) | [Release: `TuChong-SWE-bench-Multilingual-demo-2026-08-10.tar.zst`](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/download/demo-2026-08-10/TuChong-SWE-bench-Multilingual-demo-2026-08-10.tar.zst) | published in the [Release notes](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10) · 见 Release 说明 |
+
+> The one-shot archive extracts to `TuChong-SWE-bench-Multilingual/` and is identical to cloning this repository at tag `demo-2026-08-10` and adding the image archive — `shasum -a 256 -c CHECKSUMS.sha256` verifies 141/141 out of the box.
+>
+> 一站式压缩包解压出 `TuChong-SWE-bench-Multilingual/` 目录，等同于克隆本仓库 `demo-2026-08-10` tag 再放入镜像包——开箱即可 `shasum -a 256 -c CHECKSUMS.sha256` 校验 141/141。
 
 **File formats · 文件格式**：
 
@@ -171,9 +177,9 @@ Every instance passed the full ship gates before release:
 - Audit evidence (contamination, verified rubric, grading results, validation provenance, and raw `gold_pre` / `gold_post` / `agent_post` logs) is persisted consistently across `task.jsonl`, `environment.json`, `swe_bench_instance`, and `INDEX.jsonl` for independent third-party verification.
 - 审计证据（污染等级、验证过的评分细则、评分结果、校验来源，以及 `gold_pre` / `gold_post` / `agent_post` 原始日志）一致持久化于 `task.jsonl`、`environment.json`、`swe_bench_instance` 与 `INDEX.jsonl` 四处，供独立第三方复核。
 
-Full methodology, disclosure, and known limitations: [`DATA_CARD.md`](DATA_CARD.md).
+Full methodology, disclosure, and known limitations: [`DATA_CARD.md`](DATA_CARD.md) (English, canonical) · [`DATA_CARD.zh-CN.md`](DATA_CARD.zh-CN.md)（中文译本，如与英文版有出入以英文版为准）.
 
-完整方法论、披露事项与已知局限见 [`DATA_CARD.md`](DATA_CARD.md)。
+完整方法论、披露事项与已知局限见 [`DATA_CARD.md`](DATA_CARD.md)（英文权威原版）· [`DATA_CARD.zh-CN.md`](DATA_CARD.zh-CN.md)（中文译本，如与英文版有出入以英文版为准）。
 
 ---
 
