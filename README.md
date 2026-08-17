@@ -12,6 +12,7 @@
 [![Agent](https://img.shields.io/badge/Agent-Kimi_K3_%C3%97_mini--swe--agent-F59E0B?style=flat-square)](#trajectory-formats--轨迹格式)
 [![Demo Release](https://img.shields.io/badge/Demo_Release-2026--08--10-6B7280?style=flat-square)](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10)
 [![Hugging Face](https://img.shields.io/badge/Hugging_Face-Dataset_Mirror-FFD21E?style=flat-square&logo=huggingface)](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual)
+[![ModelScope](https://img.shields.io/badge/ModelScope-Dataset_Mirror-624AFF?style=flat-square)](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual)
 [![Access](https://img.shields.io/badge/Access-Demo_Free_%C2%B7_Full_by_License-EF4444?style=flat-square)](#data-access--数据获取)
 
 <p>
@@ -40,9 +41,9 @@ This repository hosts the **first public demo release** (`demo-2026-08-10`): 9 f
 
 本仓库发布首个公开样例（`demo-2026-08-10`）：由 `mini-swe-agent × Kimi K3` 生成、经真实 Docker 评分验证全部解决的 9 个实例，覆盖 C（2）、C++（2）、Go（2）、Java（2）、TypeScript（1）。完整基准持续构建中，详见 [Data Access · 数据获取](#data-access--数据获取)。
 
-The complete demo bundle — including the Docker image archive — is also mirrored on Hugging Face for one-stop download: [`tuchong/TuChong-SWE-bench-Multilingual`](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual). All payload files there are byte-identical to the canonical bundle and verifiable via the same `CHECKSUMS.sha256` (141/141).
+The complete demo bundle — including the Docker image archive — is also mirrored on Hugging Face and ModelScope (direct access from mainland China · 国内直连) for one-stop download: [`tuchong/TuChong-SWE-bench-Multilingual`](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual) · [`tuchong/TuChong-SWE-bench-Multilingual`](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual). All payload files there are byte-identical to the canonical bundle and verifiable via the same `CHECKSUMS.sha256` (141/141).
 
-完整样例数据包（含 Docker 镜像包）另镜像于 Hugging Face，支持一站式下载：[`tuchong/TuChong-SWE-bench-Multilingual`](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual)。该镜像的全部载荷文件与正式数据包逐字节一致，可用同一份 `CHECKSUMS.sha256` 校验（141/141）。
+完整样例数据包（含 Docker 镜像包）另镜像于 Hugging Face 与 ModelScope（国内直连），支持一站式下载：[Hugging Face](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual) · [ModelScope](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual)。两个镜像的全部载荷文件与正式数据包逐字节一致，可用同一份 `CHECKSUMS.sha256` 校验（141/141）。
 
 ---
 
@@ -107,7 +108,7 @@ TuChong-SWE-bench-Multilingual/
 | :--- | :--- | :--- |
 | Docker images (`linux/amd64`, 9 images) | [Release: `docker-images-linux-amd64.tar.zst`](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/download/demo-2026-08-10/docker-images-linux-amd64.tar.zst) | `ad1aed9238a3d5f783f983994cdeba7072953cf030cf4706b43fecbd0030d53a` |
 | Complete repository + images (one-shot) | [Release: `TuChong-SWE-bench-Multilingual-demo-2026-08-10.tar.zst`](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/download/demo-2026-08-10/TuChong-SWE-bench-Multilingual-demo-2026-08-10.tar.zst) | published in the [Release notes](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10) · 见 Release 说明 |
-| Complete dataset incl. images (one-shot) · 完整数据集含镜像（一站式） | [Hugging Face: `tuchong/TuChong-SWE-bench-Multilingual`](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual) | verify via the in-repo `CHECKSUMS.sha256` (141/141) · 用仓库内 `CHECKSUMS.sha256` 校验（141/141） |
+| Complete dataset incl. images (one-shot) · 完整数据集含镜像（一站式） | [Hugging Face: `tuchong/TuChong-SWE-bench-Multilingual`](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual) · [ModelScope: `tuchong/TuChong-SWE-bench-Multilingual`](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual) | verify via the in-repo `CHECKSUMS.sha256` (141/141) · 用仓库内 `CHECKSUMS.sha256` 校验（141/141） |
 
 > The one-shot archive extracts to `TuChong-SWE-bench-Multilingual/` and is identical to cloning this repository at tag `demo-2026-08-10` and adding the image archive — `shasum -a 256 -c CHECKSUMS.sha256` verifies 141/141 out of the box.
 >
@@ -150,6 +151,9 @@ curl -L -o images/docker-images-linux-amd64.tar.zst \
 # 备选：从 Hugging Face 镜像一条命令一站式获取（含 Docker 镜像包）
 hf download tuchong/TuChong-SWE-bench-Multilingual \
   --repo-type dataset --local-dir TuChong-SWE-bench-Multilingual
+# or from ModelScope (direct access from mainland China) · 或从 ModelScope 镜像（国内直连）
+modelscope download --dataset tuchong/TuChong-SWE-bench-Multilingual \
+  --local_dir TuChong-SWE-bench-Multilingual
 
 # 3) Verify integrity — all 141 files must report OK · 全部 141 个文件校验通过
 shasum -a 256 -c CHECKSUMS.sha256
