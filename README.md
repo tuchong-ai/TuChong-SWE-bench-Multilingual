@@ -13,6 +13,7 @@
 [![Demo Release](https://img.shields.io/badge/Demo_Release-2026--08--10-6B7280?style=flat-square)](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10)
 [![Hugging Face](https://img.shields.io/badge/Hugging_Face-Dataset_Mirror-FFD21E?style=flat-square&logo=huggingface)](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual)
 [![ModelScope](https://img.shields.io/badge/ModelScope-Dataset_Mirror-624AFF?style=flat-square)](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual)
+[![Gitee](https://img.shields.io/badge/Gitee-Repo_Mirror-C71D23?style=flat-square&logo=gitee)](https://gitee.com/tuchong_ai/TuChong-SWE-bench-Multilingual)
 [![Access](https://img.shields.io/badge/Access-Demo_Free_%C2%B7_Full_by_License-EF4444?style=flat-square)](#data-access--数据获取)
 
 <p>
@@ -44,6 +45,10 @@ This repository hosts the **first public demo release** (`demo-2026-08-10`): 9 f
 The complete demo bundle — including the Docker image archive — is also mirrored on Hugging Face and ModelScope (direct access from mainland China · 国内直连) for one-stop download: [`tuchong/TuChong-SWE-bench-Multilingual`](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual) · [`tuchong/TuChong-SWE-bench-Multilingual`](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual). All payload files there are byte-identical to the canonical bundle and verifiable via the same `CHECKSUMS.sha256` (141/141).
 
 完整样例数据包（含 Docker 镜像包）另镜像于 Hugging Face 与 ModelScope（国内直连），支持一站式下载：[Hugging Face](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual) · [ModelScope](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual)。两个镜像的全部载荷文件与正式数据包逐字节一致，可用同一份 `CHECKSUMS.sha256` 校验（141/141）。
+
+The repository itself is additionally mirrored on [Gitee](https://gitee.com/tuchong_ai/TuChong-SWE-bench-Multilingual) for direct clone from mainland China, kept in sync with the canonical GitHub repository; it excludes Release assets and the Docker image archive, which remain available via GitHub Release, Hugging Face, or ModelScope.
+
+本仓库另镜像于 [Gitee](https://gitee.com/tuchong_ai/TuChong-SWE-bench-Multilingual)（国内直连克隆，与 GitHub 主仓库保持同步）；不含 Release 资产与 Docker 镜像包，后者仍经由 GitHub Release、Hugging Face 或 ModelScope 获取。
 
 ---
 
@@ -109,6 +114,7 @@ TuChong-SWE-bench-Multilingual/
 | Docker images (`linux/amd64`, 9 images) | [Release: `docker-images-linux-amd64.tar.zst`](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/download/demo-2026-08-10/docker-images-linux-amd64.tar.zst) | `ad1aed9238a3d5f783f983994cdeba7072953cf030cf4706b43fecbd0030d53a` |
 | Complete repository + images (one-shot) | [Release: `TuChong-SWE-bench-Multilingual-demo-2026-08-10.tar.zst`](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/download/demo-2026-08-10/TuChong-SWE-bench-Multilingual-demo-2026-08-10.tar.zst) | published in the [Release notes](https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual/releases/tag/demo-2026-08-10) · 见 Release 说明 |
 | Complete dataset incl. images (one-shot) · 完整数据集含镜像（一站式） | [Hugging Face: `tuchong/TuChong-SWE-bench-Multilingual`](https://huggingface.co/datasets/tuchong/TuChong-SWE-bench-Multilingual) · [ModelScope: `tuchong/TuChong-SWE-bench-Multilingual`](https://modelscope.cn/datasets/tuchong/TuChong-SWE-bench-Multilingual) | verify via the in-repo `CHECKSUMS.sha256` (141/141) · 用仓库内 `CHECKSUMS.sha256` 校验（141/141） |
+| Repository source (mainland-direct clone) · 仓库源码（国内直连克隆） | [Gitee: `tuchong_ai/TuChong-SWE-bench-Multilingual`](https://gitee.com/tuchong_ai/TuChong-SWE-bench-Multilingual) | same content as GitHub, excl. Release assets · 内容与 GitHub 一致，不含 Release 资产 |
 
 > The one-shot archive extracts to `TuChong-SWE-bench-Multilingual/` and is identical to cloning this repository at tag `demo-2026-08-10` and adding the image archive — `shasum -a 256 -c CHECKSUMS.sha256` verifies 141/141 out of the box.
 >
@@ -135,6 +141,8 @@ TuChong-SWE-bench-Multilingual/
 ```bash
 # 1) Clone this repository · 克隆仓库
 git clone https://github.com/tuchong-ai/TuChong-SWE-bench-Multilingual.git
+# or from the Gitee mirror (direct access from mainland China) · 或从 Gitee 镜像克隆（国内直连）
+git clone https://gitee.com/tuchong_ai/TuChong-SWE-bench-Multilingual.git
 cd TuChong-SWE-bench-Multilingual
 
 # 2) Download the pinned Docker image archive (1.4 GB) into images/
@@ -269,7 +277,7 @@ If this dataset supports your research, please cite:
 | :--- | :--- |
 | 📧 **Email · 邮箱** | <a href="mailto:&#122;&#104;&#97;&#110;&#103;&#106;&#105;&#110;&#112;&#101;&#110;&#103;&#64;&#109;&#97;&#105;&#108;&#46;&#116;&#117;&#99;&#104;&#111;&#110;&#103;&#46;&#99;&#111;&#109;">&#122;&#104;&#97;&#110;&#103;&#106;&#105;&#110;&#112;&#101;&#110;&#103;&#64;&#109;&#97;&#105;&#108;&#46;&#116;&#117;&#99;&#104;&#111;&#110;&#103;&#46;&#99;&#111;&#109;</a> |
 | 🌐 **AIGC Data Platform · 数据平台** | [stock.tuchong.com/landing-page/aigc](https://stock.tuchong.com/landing-page/aigc?source=tc_pc_home) |
-| 🏢 **Organization · 组织** | [github.com/tuchong-ai](https://github.com/tuchong-ai) |
+| 🏢 **Organization · 组织** | [github.com/tuchong-ai](https://github.com/tuchong-ai) · [gitee.com/tuchong_ai](https://gitee.com/tuchong_ai) |
 
 ---
 
